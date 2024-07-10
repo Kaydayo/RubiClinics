@@ -17,6 +17,8 @@ import { Input } from "@/components/ui/input"
 import CustomFormField from "../../CustomFormField"
 import { BiUser } from "react-icons/bi"
 import { MdOutlineEmail } from "react-icons/md"
+import SubmitButton from "../../SubmitButton"
+import { useState } from "react"
 
 export enum FormFieldType {
     INPUT = 'input',
@@ -35,6 +37,7 @@ const formSchema = z.object({
 })
 
 const PatientForm = () => {
+    const [isLoading, setisLoading] = useState(false)
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -72,7 +75,7 @@ const PatientForm = () => {
                     iconSrc={(<MdOutlineEmail height={24} width={24} className='ml-2 mt-3' />)}
                     iconAlt="email"
                 />
-                 <CustomFormField
+                <CustomFormField
                     fieldType={FormFieldType.PHONE_INPUT}
                     control={form.control}
                     name="phone"
@@ -81,7 +84,7 @@ const PatientForm = () => {
                     iconSrc={(<MdOutlineEmail height={24} width={24} className='ml-2 mt-3' />)}
                     iconAlt="phone number"
                 />
-                <Button type="submit">Submit</Button>
+                <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
             </form>
         </Form>
     )
