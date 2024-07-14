@@ -1,8 +1,6 @@
 "use client"
 import {
-    Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -11,11 +9,10 @@ import {
 import { Input } from "@/components/ui/input"
 import { Control } from "react-hook-form";
 import { FormFieldType } from "./ui/forms/PatientForm";
-import { BiUser } from "react-icons/bi";
 import React from "react";
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
-
+import Image from "next/image";
 
 interface CustomProps {
     control: Control<any>;
@@ -23,7 +20,7 @@ interface CustomProps {
     name: string;
     label?: string;
     placeholder?: string;
-    iconSrc?: React.ReactNode;
+    iconSrc?: string;
     iconAlt?: string;
     disabled?: boolean;
     dateFormat?: string;
@@ -32,15 +29,22 @@ interface CustomProps {
     renderSkeleton?: (field: any) => React.ReactNode;
 }
 const RenderField = ({ field, props }: { field: any, props: CustomProps }) => {
-    const { fieldType, iconAlt, iconSrc, placeholder } = props
     switch (props.fieldType) {
         case FormFieldType.INPUT:
 
             return (
                 <div className="flex rounded-md border border-dark-500 bg-dark-400">
-                    {iconSrc && iconSrc}
+                    {props.iconSrc && (
+                        <Image
+                            src={props.iconSrc}
+                            width={24}
+                            height={24}
+                            alt={props.iconAlt || "icon"}
+                            className="ml-2"
+                        />)
+                    }
                     <FormControl>
-                        <Input {...field} placeholder={placeholder} className="shad-input border-0" />
+                        <Input  {...field} placeholder={props.placeholder} className="shad-input border-0" />
                     </FormControl>
                 </div>
 
@@ -50,7 +54,7 @@ const RenderField = ({ field, props }: { field: any, props: CustomProps }) => {
                 <FormControl>
                         <PhoneInput
                             defaultCountry="NG"
-                            placeholder={placeholder}
+                            placeholder={props.placeholder}
                             international
                             withCountryCallingCode
                             value={field.value}
@@ -59,10 +63,8 @@ const RenderField = ({ field, props }: { field: any, props: CustomProps }) => {
                         />
                 </FormControl>
             )
-
-
         default:
-            break;
+            return null
     }
 
 }
@@ -75,7 +77,7 @@ const CustomFormField = (props: CustomProps) => {
             render={({ field }) => (
                 <FormItem className="flex-1">
                     {fieldType !== FormFieldType.CHECKBOX && label && (
-                        <FormLabel>{label}</FormLabel>
+                        <FormLabel className="shad-input-label">{label}</FormLabel>
                     )}
 
                     <RenderField field={field} props={props} />

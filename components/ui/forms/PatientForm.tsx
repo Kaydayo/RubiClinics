@@ -3,15 +3,12 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { Button } from "@/components/ui/button"
 import {
     Form
 } from "@/components/ui/form"
 import CustomFormField from "../../CustomFormField"
-import { BiUser } from "react-icons/bi"
-import { MdOutlineEmail } from "react-icons/md"
 import SubmitButton from "../../SubmitButton"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { UserFormValidation } from "../../../lib/validation"
 import {useRouter} from 'next/navigation'
 import { createUser } from "../../../lib/actions/patient.sctions"
@@ -45,11 +42,19 @@ const PatientForm = () => {
         try {
             const userData = {name,email,phone}
             const user = await createUser(userData)
-            if(user) router.push(`/patients/${user?.$id}/register`)
+            if (user) {
+                setisLoading(false)
+                router.push(`/patients/${user?.$id}/register`)
+            }
         } catch (error) {
-            console.log(error)
+            setisLoading(false)
         }
     }
+
+    useEffect(() => {
+        // Any client-specific logic can go here
+    }, [])
+    
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
@@ -63,7 +68,7 @@ const PatientForm = () => {
                     name="name"
                     label="Full name"
                     placeholder="Joh Does"
-                    iconSrc={(<BiUser height={24} width={24} className='ml-2 mt-3' />)}
+                    iconSrc="/assets/icons/user.svg"
                     iconAlt="user"
                 />
                 <CustomFormField
@@ -72,7 +77,7 @@ const PatientForm = () => {
                     name="email"
                     label="Email"
                     placeholder="johndoes@gmail.com"
-                    iconSrc={(<MdOutlineEmail height={24} width={24} className='ml-2 mt-3' />)}
+                    iconSrc="/assets/icons/email.svg"
                     iconAlt="email"
                 />
                 <CustomFormField
@@ -81,7 +86,6 @@ const PatientForm = () => {
                     name="phone"
                     label="Phone number"
                     placeholder="+2348188331245"
-                    iconSrc={(<MdOutlineEmail height={24} width={24} className='ml-2 mt-3' />)}
                     iconAlt="phone number"
                 />
                 <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
