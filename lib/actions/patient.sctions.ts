@@ -6,7 +6,8 @@ export const createUser = async (user: CreateUserParams) => {
         const newUser = await users.create(ID.unique(), user.email, user.phone, undefined, user.name)
         console.log(newUser, "LOLLOLO")
         return newUser
-    } catch (error:any) {
+    } catch (error: any) {
+        console.log(error);
         if (error && error?.code === 409) {
             const documents = await users.list([
                 Query.equal('email',[user.email])

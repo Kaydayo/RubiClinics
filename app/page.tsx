@@ -34,7 +34,7 @@ export default function Home() {
         height={1000}
         width={1000}
         alt="patient"
-        className="side-img  object-center grayscale max-w-[40%]"
+        className="side-img grayscale max-w-[40%]"
       />
     </div>
   )

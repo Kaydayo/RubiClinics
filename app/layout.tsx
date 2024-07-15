@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Poppins  } from "next/font/google";
+import { Plus_Jakarta_Sans  } from "next/font/google";
 import "./globals.css";
 import {cn} from '@/lib/utils'
 import { ThemeProvider } from "next-themes";
+import { NextFontWithVariable } from "next/dist/compiled/@next/font";
 
-const fontSans = Poppins(
+const fontSans:NextFontWithVariable = Plus_Jakarta_Sans(
   {
     subsets: ["latin"],
     weight: ["300", "400", "500", "600", "700"],
@@ -23,10 +24,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn('min-h-screen bg-dark-300 font-sans antialiased', fontSans.variable)}>
+      <body className={cn('min-h-screen bg-dark-300 font-sans antialiased', fontSans.variable)} suppressHydrationWarning={true}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >{children}
