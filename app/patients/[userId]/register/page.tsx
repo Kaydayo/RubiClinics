@@ -3,7 +3,8 @@ import Link from 'next/link'
 import React from 'react'
 import RegisterForm from '../../../../components/forms/RegisterForm'
 
-const Register = () => {
+const Register = async ({params:{userId}}:SearchParamProps) => {
+    const user = await getUser(userId)
     return (
         <div className="flex h-screen max-h-screen">
             {/* TOO: OTP verification | Passkey modal */}
