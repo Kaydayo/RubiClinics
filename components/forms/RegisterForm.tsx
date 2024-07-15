@@ -6,12 +6,12 @@ import { z } from "zod"
 import {
     Form
 } from "@/components/ui/form"
-import CustomFormField from "../../CustomFormField"
-import SubmitButton from "../../SubmitButton"
+import CustomFormField from "../CustomFormField"
+import SubmitButton from "../SubmitButton"
 import { useEffect, useState } from "react"
-import { UserFormValidation } from "../../../lib/validation"
-import {useRouter} from 'next/navigation'
-import { createUser } from "../../../lib/actions/patient.sctions"
+import { UserFormValidation } from "../../lib/validation"
+import { useRouter } from 'next/navigation'
+import { createUser } from "../../lib/actions/patient.sctions"
 
 export enum FormFieldType {
     INPUT = 'input',
@@ -24,7 +24,7 @@ export enum FormFieldType {
 }
 
 
-const PatientForm = () => {
+const RegisterForm = () => {
     const router = useRouter()
     const [isLoading, setisLoading] = useState(false)
     const form = useForm<z.infer<typeof UserFormValidation>>({
@@ -37,10 +37,10 @@ const PatientForm = () => {
     })
 
 
-    async function onSubmit({name,email,phone}: z.infer<typeof UserFormValidation>) {
+    async function onSubmit({ name, email, phone }: z.infer<typeof UserFormValidation>) {
         setisLoading(true)
         try {
-            const userData = {name,email,phone}
+            const userData = { name, email, phone }
             const user = await createUser(userData)
             console.log(user, "THE USERS")
             if (user) {
@@ -55,7 +55,7 @@ const PatientForm = () => {
     useEffect(() => {
         // Any client-specific logic can go here
     }, [])
-    
+
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
@@ -95,4 +95,4 @@ const PatientForm = () => {
     )
 }
 
-export default PatientForm
+export default RegisterForm

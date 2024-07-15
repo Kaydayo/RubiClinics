@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Control } from "react-hook-form";
-import { FormFieldType } from "./ui/forms/PatientForm";
+import { FormFieldType } from "./forms/PatientForm";
 import React from "react";
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
@@ -52,15 +52,15 @@ const RenderField = ({ field, props }: { field: any, props: CustomProps }) => {
         case FormFieldType.PHONE_INPUT:
             return (
                 <FormControl>
-                        <PhoneInput
-                            defaultCountry="NG"
-                            placeholder={props.placeholder}
-                            international
-                            withCountryCallingCode
-                            value={field.value}
-                            onChange={field.onChange}
-                            className="input-phone"
-                        />
+                    <PhoneInput
+                        defaultCountry="NG"
+                        placeholder={props.placeholder}
+                        international
+                        withCountryCallingCode
+                        value={field.value}
+                        onChange={field.onChange}
+                        className="input-phone"
+                    />
                 </FormControl>
             )
         default:
